@@ -19,3 +19,4 @@ torch
 
 huggingface-hub
 plotly
+torchvision
