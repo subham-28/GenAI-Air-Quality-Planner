@@ -27,14 +27,13 @@
 
 
 
+# # Fetch Lat Lon from a place name
+
+
 import requests
 
-
 def search_locations(city, country_code="IN", count=10):
-    """
-    Search multiple matching locations from Open-Meteo Geocoding API.
-    Used by Streamlit UI so the user can choose the correct match.
-    """
+
     if not city or not city.strip():
         return []
 
@@ -90,11 +89,6 @@ def search_locations(city, country_code="IN", count=10):
 
 
 def get_coordinates(city, country_code="IN"):
-    """
-    Backward-compatible function.
-    Returns the first matched location.
-    Existing services using get_coordinates() will still work.
-    """
     locations = search_locations(
         city=city,
         country_code=country_code,

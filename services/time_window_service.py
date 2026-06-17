@@ -241,7 +241,7 @@ def build_hourly_forecast_rows(pollution):
 
         rows.append({
             "time": time_str,
-            "datetime": dt,          # needed internally for best/worst window calculation
+            "datetime": dt,        
             "hour": format_hour_label(dt),
             "pm2_5": pm25,
             "pm10": pm10,
@@ -254,10 +254,6 @@ def build_hourly_forecast_rows(pollution):
 
 
 def serialize_hourly_rows(rows):
-    """
-    Removes Python datetime object before saving into result.
-    This prevents json.dumps() errors in Streamlit download button.
-    """
     clean_rows = []
 
     for row in rows:
@@ -361,6 +357,5 @@ def find_best_and_worst_windows(pollution, duration_minutes=60):
         "worst_start_time": worst["start_time"],
         "worst_end_time": worst["end_time"],
 
-        # only clean JSON-safe rows go to Streamlit result
         "hourly_forecast": serialize_hourly_rows(rows[:24])
     }

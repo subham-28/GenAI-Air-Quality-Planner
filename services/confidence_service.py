@@ -11,18 +11,14 @@ def calculate_confidence(plan, retrieval_status=None):
     score = 0
     reasons = []
 
-    # -----------------------------
-    # Location clarity
-    # -----------------------------
+
     if plan.get("matched_location") and plan.get("latitude") and plan.get("longitude"):
         score += 20
         reasons.append("Location was clearly resolved.")
     else:
         reasons.append("Location match is unclear.")
 
-    # -----------------------------
-    # PM2.5 / PM10 availability
-    # -----------------------------
+
     pm25_available = plan.get("pm2_5") is not None
     pm10_available = plan.get("pm10") is not None
 
@@ -35,9 +31,7 @@ def calculate_confidence(plan, retrieval_status=None):
     else:
         reasons.append("PM2.5 and PM10 values are missing.")
 
-    # -----------------------------
-    # AQI category availability
-    # -----------------------------
+
     category = plan.get("overall_category")
 
     if category and category != "Unknown":
@@ -46,9 +40,7 @@ def calculate_confidence(plan, retrieval_status=None):
     else:
         reasons.append("AQI category could not be calculated reliably.")
 
-    # -----------------------------
-    # Pollutant completeness
-    # -----------------------------
+
     pollutant_keys = [
         "carbon_monoxide",
         "nitrogen_dioxide",
@@ -72,9 +64,7 @@ def calculate_confidence(plan, retrieval_status=None):
     else:
         reasons.append("Supporting pollutant data is limited.")
 
-    # -----------------------------
-    # Guideline retrieval quality
-    # -----------------------------
+
     retrieval_status = retrieval_status or {}
 
     retrieved_chunks = retrieval_status.get("retrieved_chunks", 0)
@@ -88,9 +78,7 @@ def calculate_confidence(plan, retrieval_status=None):
     else:
         reasons.append("Guideline retrieval context was weak or unavailable.")
 
-    # -----------------------------
-    # Label
-    # -----------------------------
+
     if score >= 80:
         label = "High"
     elif score >= 50:

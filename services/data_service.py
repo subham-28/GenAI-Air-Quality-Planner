@@ -21,10 +21,7 @@
 
 
 def extract_curr_data(location, pollution, weather):
-    # Works whether pollution is full response or only current response
     aq = pollution.get("current", pollution)
-
-    # Works whether weather is full response or only current response
     current_weather = weather.get("current", weather)
 
     return {
